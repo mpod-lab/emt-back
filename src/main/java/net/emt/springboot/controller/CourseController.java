@@ -34,9 +34,9 @@ public class CourseController {
 	}
 	
 	@GetMapping("/courses/{id}")
-	public ResponseEntity<Course> getCourseById(@PathVariable(value = "id") Long categoryId) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(categoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + categoryId));	
+	public ResponseEntity<Course> getCourseById(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
+		Course course = courseRepository.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + courseId));	
 		return ResponseEntity.ok().body(course);
 	}
 	
@@ -46,10 +46,10 @@ public class CourseController {
 	}
 	
 	@PutMapping("course/{id}")
-	public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long categoryId,
+	public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long courseId,
 			@Valid @RequestBody Course courseDetails) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(categoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + categoryId));
+		Course course = courseRepository.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseId));
 		
 		course.setCourseName(courseDetails.getCourseName());
 		course.setCategoryId(courseDetails.getCategoryId());
@@ -58,9 +58,9 @@ public class CourseController {
 	}
 	
 	@DeleteMapping("course/{id}")
-	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long categoryId) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(categoryId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + categoryId));
+	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
+		Course course = courseRepository.findById(courseId)
+				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseId));
 		
 		this.courseRepository.delete(course);
 		
