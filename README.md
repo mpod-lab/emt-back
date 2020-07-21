@@ -1,1 +1,1 @@
-Spring Boot, PostgreSQL, JPA, Hibernate RESTful CRUD API
+Spring Boot, PostgreSQL, JPA, Hibernate RESTful API
