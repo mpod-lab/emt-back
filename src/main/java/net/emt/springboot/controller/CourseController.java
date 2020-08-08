@@ -1,11 +1,8 @@
 package net.emt.springboot.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.persistence.Id;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,62 +18,43 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.emt.springboot.exception.ResourceNotFoundException;
 import net.emt.springboot.model.Course;
-import net.emt.springboot.repository.CourseRepository;
+import net.emt.springboot.services.CourseService;
 
 @RestController
 @RequestMapping("/api/v1/")
 public class CourseController {
 
 	@Autowired
-	private CourseRepository courseRepository;
+	private CourseService courseService;
 	
 	@GetMapping("courses")
 	public List<Course> getAllCourses() {
-		return this.courseRepository.findAll();
+		return this.courseService.getAllCourses();
 	}
 	
 	@GetMapping("/courses/{id}")
 	public ResponseEntity<Course> getCourseById(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(courseId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + courseId));	
-		return ResponseEntity.ok().body(course);
+		return this.courseService.getCourseById(courseId);
 	}
 	
 	@GetMapping("/course/{category}")
 	public List<Course> getCourseByCategory(@PathVariable(value = "category") Long courseCategory) {
-		List<Course> courses = new ArrayList<>();
-		courseRepository.findByCategoryId(courseCategory)
-		.forEach(courses::add);
-		return courses;
+		return this.courseService.getCourseByCategory(courseCategory);
 	}
 	
 	@PostMapping("courses")
 	public Course createCourse(@RequestBody Course course) {
-		return this.courseRepository.save(course);
+		return this.courseService.createCourse(course);
 	}
 	
 	@PutMapping("course/{id}")
 	public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long courseId,
 			@Valid @RequestBody Course courseDetails) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(courseId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseId));
-		
-		course.setCourseName(courseDetails.getCourseName());
-	//	course.setCategoryId(courseDetails.getCategoryId());
-		
-		return ResponseEntity.ok(this.courseRepository.save(course));
+		return this.courseService.updateCourse(courseId, courseDetails);
 	}
 	
 	@DeleteMapping("course/{id}")
 	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
-		Course course = courseRepository.findById(courseId)
-				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseId));
-		
-		this.courseRepository.delete(course);
-		
-		Map<String, Boolean> response = new HashMap<>();
-		response.put("deleted", Boolean.TRUE);
-		
-		return response;
+		return this.courseService.deleteCourse(courseId);
 	}
 }
