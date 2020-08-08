@@ -1,10 +1,13 @@
 package net.emt.springboot.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,24 +15,23 @@ import javax.persistence.Table;
 public class Course {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="id")
 	private long id;
 	
 	@Column(name = "course_name")
 	private String courseName;
 	
-	@Column(name = "category_id")
-	private long categoryId;
-
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    private Category category;
+	
 	
 	public Course() {
 		super();
 	}
 	
-	public Course(long id, String courseName, long courseId) {
+	public Course(String courseName) {
 		super();
-		this.id = id;
 		this.courseName = courseName;
-		this.categoryId = courseId;
 	}
 
 	public long getId() {
@@ -48,12 +50,19 @@ public class Course {
 		this.courseName = courseName;
 	}
 
-	public long getCategoryId() {
-		return categoryId;
+
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setCategoryId(long categoryId) {
-		this.categoryId = categoryId;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
-	
+
+
+
+	@Override
+	public String toString() {
+		return "Course [id=" + id + ", courseName=" + courseName + "]";
+	}
 }

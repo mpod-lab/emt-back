@@ -44,6 +44,7 @@ public class CategoryController {
 		return this.categoryRepository.save(category);
 	}
 	
+	
 	@PutMapping("/category/{id}")
 	public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
 			@Valid @RequestBody Category categoryDetails) throws ResourceNotFoundException {

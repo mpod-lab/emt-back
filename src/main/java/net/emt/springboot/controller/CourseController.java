@@ -1,9 +1,11 @@
 package net.emt.springboot.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.Id;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,14 @@ public class CourseController {
 		return ResponseEntity.ok().body(course);
 	}
 	
+	@GetMapping("/course/{category}")
+	public List<Course> getCourseByCategory(@PathVariable(value = "category") Long courseCategory) {
+		List<Course> courses = new ArrayList<>();
+		courseRepository.findByCategoryId(courseCategory)
+		.forEach(courses::add);
+		return courses;
+	}
+	
 	@PostMapping("courses")
 	public Course createCourse(@RequestBody Course course) {
 		return this.courseRepository.save(course);
@@ -52,7 +62,7 @@ public class CourseController {
 				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id :: " + courseId));
 		
 		course.setCourseName(courseDetails.getCourseName());
-		course.setCategoryId(courseDetails.getCategoryId());
+	//	course.setCategoryId(courseDetails.getCategoryId());
 		
 		return ResponseEntity.ok(this.courseRepository.save(course));
 	}
