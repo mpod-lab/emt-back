@@ -1,8 +1,11 @@
 package net.emt.springboot.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "course")
-public class Course {
+public class Course  {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -22,6 +25,7 @@ public class Course {
 	private String courseName;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn(name="category")
     private Category category;
 	
 	

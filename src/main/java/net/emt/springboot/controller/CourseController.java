@@ -43,7 +43,7 @@ public class CourseController {
 	}
 	
 	@PostMapping("courses")
-	public Course createCourse(@RequestBody Course course) {
+	public Course createCourse(@RequestBody Course course) throws ResourceNotFoundException{
 		return this.courseService.createCourse(course);
 	}
 	

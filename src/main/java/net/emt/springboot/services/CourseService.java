@@ -10,13 +10,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import net.emt.springboot.exception.ResourceNotFoundException;
+import net.emt.springboot.model.Category;
 import net.emt.springboot.model.Course;
+import net.emt.springboot.repository.CategoryRepository;
 import net.emt.springboot.repository.CourseRepository;
 
 @Component
 public class CourseService {
 
 	@Autowired CourseRepository courseRepository;
+	@Autowired CategoryRepository categoryRepository;
+
 	
 	public List<Course> getAllCourses() {
 		return this.courseRepository.findAll();
@@ -35,7 +39,12 @@ public class CourseService {
 		return courses;
 	}
 	
-	public Course createCourse(Course course) {
+	public Course createCourse(Course course) throws ResourceNotFoundException{
+		if (course != null && course.getCategory() != null && course.getCategory().getId() != null) {
+			Category category = categoryRepository.findById(course.getCategory().getId())
+					.orElseThrow(() -> new ResourceNotFoundException("Category not found for this id ::" + course.getCategory().getId()));	
+			course.setCategory(category);
+		}
 		return this.courseRepository.save(course);
 	}
 	
