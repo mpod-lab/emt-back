@@ -6,15 +6,17 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import net.emt.springboot.repository.CategoryRepository;
 import net.emt.springboot.repository.CourseRepository;
 import net.emt.springboot.repository.TestResultRepository;
+import net.emt.springboot.repository.TrainerRepository;
 import net.emt.springboot.exception.ResourceNotFoundException;
 import net.emt.springboot.model.Category;
 import net.emt.springboot.model.Course;
+import net.emt.springboot.model.ResultFromCourseAndTrainerRequestBody;
 import net.emt.springboot.model.TestResult;
+import net.emt.springboot.model.Trainer;
 
 @Component
 public class TestResultService {
@@ -22,7 +24,7 @@ public class TestResultService {
 	@Autowired TestResultRepository testResultRepository;
 	@Autowired CategoryRepository categoryRepository;
 	@Autowired CourseRepository courseRepository;
-
+	@Autowired TrainerRepository trainerRepository;
 	
 	public List<TestResult> getAllTestResults(){
 		return this.testResultRepository.findAll();
@@ -40,6 +42,12 @@ public class TestResultService {
 			Course course = courseRepository.findById(testResult.getCourse().getId())
 					.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + testResult.getCourse().getId()));	
 			testResult.setCourse(course);
+		}
+		
+		if (testResult != null && testResult.getTrainer() != null) {
+			Trainer trainer = trainerRepository.findById(testResult.getTrainer().getId())
+					.orElseThrow(() -> new ResourceNotFoundException("Trainer not found for this id ::" + testResult.getTrainer().getId()));	
+			testResult.setTrainer(trainer);
 		}
 		
 		return this.testResultRepository.save(testResult);
@@ -76,5 +84,25 @@ public class TestResultService {
 			result = ((float)score / allQuestions) * 100;
 		}
 		return result;
+	}
+	
+	public List<TestResult> resultFromCourseAndTrainer(ResultFromCourseAndTrainerRequestBody testResult) throws ResourceNotFoundException{
+		Course course = null;
+		Trainer trainer = null;
+		List<TestResult> results = new ArrayList<>();
+		if (testResult.getCourseId() != null) {
+			course = courseRepository.findById(testResult.getCourseId())
+					.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + testResult.getCourseId()));
+		}
+		if (testResult.getTrainerId() != null) {
+		trainer = trainerRepository.findById(testResult.getTrainerId())
+				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + testResult.getTrainerId()));	
+		}
+		if (course != null && trainer != null) {
+			testResultRepository.findByCourseIdAndTrainerId(course.getId(), trainer.getId())
+			.forEach(results::add);
+		}
+		return results;
+		
 	}
 }

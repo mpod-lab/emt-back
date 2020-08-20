@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import net.emt.springboot.services.TestResultService;
 import net.emt.springboot.exception.ResourceNotFoundException;
+import net.emt.springboot.model.ResultFromCourseAndTrainerRequestBody;
 import net.emt.springboot.model.TestResult;
 
 @RestController
@@ -34,6 +35,11 @@ public class TestResultController {
 	@GetMapping("resultFromSpecificCourse/{id}")
 	public ResponseEntity<Integer> getResultFromSpecificCourse(@PathVariable(value = "id") Long courseId) {
 		return this.testResultService.getResultFromSpecificCourse(courseId);
+	}
+	
+	@PostMapping("resultFromCourseAndTrainer")
+	public List<TestResult> resultFromCourseAndTrainer(@RequestBody ResultFromCourseAndTrainerRequestBody testResult) throws ResourceNotFoundException{
+		return this.testResultService.resultFromCourseAndTrainer(testResult);
 	}
 	
 	@GetMapping("/testResult/{courseId}")

@@ -11,4 +11,5 @@ import net.emt.springboot.model.TestResult;
 @Repository
 public interface TestResultRepository extends JpaRepository<TestResult, Long> {
 	public List<TestResult> findByCourseId(Long courseId);
+	public List<TestResult> findByCourseIdAndTrainerId(long courseId, long trainerId);
 }
