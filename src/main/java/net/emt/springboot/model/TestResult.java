@@ -28,6 +28,10 @@ public class TestResult {
     private Category category;
 	
 	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn(name="course_id")
+    private Course course;
+	
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
 	@JoinColumn(name="trainer")
     private Trainer trainer;
 	
@@ -45,6 +49,9 @@ public class TestResult {
 	
 	@Column(name="course_date")
 	private Date courseDate;
+	
+	@Column(name="result")
+	private Float result;
 
 	
 	public TestResult() {
@@ -53,13 +60,14 @@ public class TestResult {
 
 
 	public TestResult(Long score, Long allQuestions, String studentName,
-			String studentSurname, Date courseDate) {
+			String studentSurname, Date courseDate, float result) {
 		super();
 		this.score = score;
 		this.allQuestions = allQuestions;
 		this.studentName = studentName;
 		this.studentSurname = studentSurname;
 		this.courseDate = courseDate;
+		this.result = result;
 	}
 
 
@@ -80,6 +88,17 @@ public class TestResult {
 
 	public void setCategory(Category category) {
 		this.category = category;
+	}
+
+	
+
+	public Course getCourse() {
+		return course;
+	}
+
+
+	public void setCourse(Course course) {
+		this.course = course;
 	}
 
 
@@ -140,6 +159,17 @@ public class TestResult {
 
 	public void setCourseDate(Date courseDate) {
 		this.courseDate = courseDate;
+	}
+
+
+	public float getResult() {
+		return result;
+	}
+
+
+	public void setResult(float result) {
+		this.result = result;
 	}	
+	
 	
 }

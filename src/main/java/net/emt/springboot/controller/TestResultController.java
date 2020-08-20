@@ -3,7 +3,9 @@ package net.emt.springboot.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,5 +29,15 @@ public class TestResultController {
 	@PostMapping("testResult")
 	public TestResult saveTestResult(@RequestBody TestResult testResult) throws ResourceNotFoundException{
 		return this.testResultService.saveTestResult(testResult);
+	}
+	
+	@GetMapping("resultFromSpecificCourse/{id}")
+	public ResponseEntity<Integer> getResultFromSpecificCourse(@PathVariable(value = "id") Long courseId) {
+		return this.testResultService.getResultFromSpecificCourse(courseId);
+	}
+	
+	@GetMapping("/testResult/{courseId}")
+	public List<TestResult> getTestByCourseId(@PathVariable(value = "courseId") Long courseId) {
+		return this.testResultService.getTestByCourseId(courseId);
 	}
 }
