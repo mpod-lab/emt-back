@@ -95,13 +95,20 @@ public class TestResultService {
 					.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + testResult.getCourseId()));
 		}
 		if (testResult.getTrainerId() != null) {
-		trainer = trainerRepository.findById(testResult.getTrainerId())
+			trainer = trainerRepository.findById(testResult.getTrainerId())
 				.orElseThrow(() -> new ResourceNotFoundException("Course not found for this id ::" + testResult.getTrainerId()));	
 		}
 		if (course != null && trainer != null) {
 			testResultRepository.findByCourseIdAndTrainerId(course.getId(), trainer.getId())
 			.forEach(results::add);
+		} else if (course != null && trainer == null) {
+			testResultRepository.findByCourseId(course.getId())
+			.forEach(results::add);
+		} else if (course == null && trainer != null) {
+			testResultRepository.findByTrainerId(trainer.getId())
+			.forEach(results::add);
 		}
+		
 		return results;
 		
 	}
