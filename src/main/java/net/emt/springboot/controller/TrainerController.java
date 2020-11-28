@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,23 +18,24 @@ import net.emt.springboot.services.TrainerService;
 
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/trainers")
 public class TrainerController {
 
 	@Autowired
 	private TrainerService trainerService;
 	
-	@GetMapping("trainers")
+	@GetMapping("/")
 	public List<Trainer> getAllCategories() {
 		return this.trainerService.getAllTrainers();
 	}
 	
-	@PostMapping("trainers")
+    @PostAuthorize("hasRole('ADMIN')")
+	@PostMapping("/")
 	public Trainer createTrainer(@RequestBody Trainer trainer) {
 		return this.trainerService.saveTrainer(trainer);
 	}
 	
-	@GetMapping("trainers/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity <Trainer> getTrainerById(@PathVariable(value = "id") Long trainerId) throws ResourceNotFoundException{
 		return this.trainerService.getTrainerById(trainerId);
 	}

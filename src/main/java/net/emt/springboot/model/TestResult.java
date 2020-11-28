@@ -41,14 +41,13 @@ public class TestResult {
 	@Column(name="all_questions")
 	private Long allQuestions;
 	
-	@Column(name="student_name")
-	private String studentName;
-	
-	@Column(name="student_surname")
-	private String studentSurname;
+	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@JoinColumn(name="student")
+	private Student student;
 	
 	@Column(name="course_date")
 	private Date courseDate;
+
 	
 	@Column(name="result")
 	private Float result;
@@ -59,13 +58,11 @@ public class TestResult {
 	}
 
 
-	public TestResult(Long score, Long allQuestions, String studentName,
-			String studentSurname, Date courseDate, float result) {
+	public TestResult(Long score, Long allQuestions, Student student, Date courseDate, float result) {
 		super();
 		this.score = score;
 		this.allQuestions = allQuestions;
-		this.studentName = studentName;
-		this.studentSurname = studentSurname;
+		this.student = student;
 		this.courseDate = courseDate;
 		this.result = result;
 	}
@@ -132,23 +129,19 @@ public class TestResult {
 	}
 
 
-	public String getStudentName() {
-		return studentName;
+	/**
+	 * @return the student
+	 */
+	public Student getStudent() {
+		return student;
 	}
 
 
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
-	}
-
-
-	public String getStudentSurname() {
-		return studentSurname;
-	}
-
-
-	public void setStudentSurname(String studentSurname) {
-		this.studentSurname = studentSurname;
+	/**
+	 * @param student the student to set
+	 */
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 

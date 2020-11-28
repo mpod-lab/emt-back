@@ -21,7 +21,7 @@ import net.emt.springboot.model.Course;
 import net.emt.springboot.services.CourseService;
 
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/")
 public class CourseController {
 
 	@Autowired

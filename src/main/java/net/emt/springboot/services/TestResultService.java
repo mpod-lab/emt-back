@@ -4,19 +4,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import net.emt.springboot.repository.CategoryRepository;
-import net.emt.springboot.repository.CourseRepository;
-import net.emt.springboot.repository.TestResultRepository;
-import net.emt.springboot.repository.TrainerRepository;
 import net.emt.springboot.exception.ResourceNotFoundException;
 import net.emt.springboot.model.Category;
 import net.emt.springboot.model.Course;
 import net.emt.springboot.model.ResultFromCourseAndTrainerRequestBody;
 import net.emt.springboot.model.TestResult;
 import net.emt.springboot.model.Trainer;
+import net.emt.springboot.repository.CategoryRepository;
+import net.emt.springboot.repository.CourseRepository;
+import net.emt.springboot.repository.TestResultRepository;
+import net.emt.springboot.repository.TrainerRepository;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Component
 public class TestResultService {
@@ -76,6 +77,19 @@ public class TestResultService {
 				}
 		}
 		return ResponseEntity.ok().body(total);
+	}
+	
+	public int calculateAverage(List<TestResult> testResults) {
+		int total = 0;
+		float result = 0;
+		 for(TestResult res:testResults)  {
+		        result += res.getResult(); 
+		 }  
+		if (result > 0) {
+			total = (int)result/testResults.size();
+		}
+		return total;
+	
 	}
 	
 	public Float calculateResult(Long score, Long allQuestions) {
