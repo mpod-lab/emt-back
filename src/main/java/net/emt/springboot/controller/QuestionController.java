@@ -22,34 +22,34 @@ import net.emt.springboot.model.Question;
 import net.emt.springboot.services.QuestionService;
 
 @RestController
-@RequestMapping("/api/questions")
+@RequestMapping("/api")
 public class QuestionController {
 
 	@Autowired
 	private QuestionService questionService;
 	
-	@GetMapping("/")
+	@GetMapping("/questions/")
 	public List<Question> getAllQuestions() {
 		return this.questionService.getAllQuestions();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/questions/{id}")
 	public ResponseEntity<Question> getQuestionById(@PathVariable(value = "id") Long questionId) throws ResourceNotFoundException {
 			return this.questionService.getQuestionById(questionId);
 	}
 	
-	@PostMapping("/")
+	@PostMapping("/admin/questions/")
 	public Question createQuestion(@RequestBody Question question) {
 		return this.questionService.createQuestion(question);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/admin/questions/{id}")
 	public ResponseEntity<Question> updateQuestion(@PathVariable(value = "id") Long questionId,
 			@Valid @RequestBody Question questionDetails) throws ResourceNotFoundException {
 		return this.questionService.updateQuestion(questionId, questionDetails);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/admin/questions/{id}")
 	public Map<String, Boolean> deleteQuestion(@PathVariable(value = "id") Long questionId) throws ResourceNotFoundException {
 		return this.questionService.deleteQuestion(questionId);
 	}

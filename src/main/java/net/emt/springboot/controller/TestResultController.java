@@ -20,32 +20,34 @@ import net.emt.springboot.services.TestResultService;
 
 
 @RestController
-@RequestMapping("/api/testResult")
+@RequestMapping("/api")
 public class TestResultController {
 
 	@Autowired TestResultService testResultService;
 	
-	@GetMapping("/")
+	@GetMapping("/testResult/")
 	public List<TestResult> getAllTestResults(){
 		return this.testResultService.getAllTestResults();
 	}
 	
-	@PostMapping("/")
+	@PostMapping("/testResult/")
 	public TestResult saveTestResult(@RequestBody TestResult testResult) throws ResourceNotFoundException{
 		return this.testResultService.saveTestResult(testResult);
 	}
-    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+  
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	@GetMapping("/resultFromSpecificCourse/{id}")
 	public ResponseEntity<Integer> getResultFromSpecificCourse(@PathVariable(value = "id") Long courseId) {
 		return this.testResultService.getResultFromSpecificCourse(courseId);
 	}
-    @PostAuthorize("hasAnyRole('ADMIN', 'USER')")
+   
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
 	@PostMapping("/resultFromCourseAndTrainer")
 	public List<TestResult> resultFromCourseAndTrainer(@RequestBody ResultFromCourseAndTrainerRequestBody testResult) throws ResourceNotFoundException{
 		return this.testResultService.resultFromCourseAndTrainer(testResult);
 	}
-    @PostAuthorize("hasAnyRole('ADMIN', 'USER')")
-	@GetMapping("/{courseId}")
+  
+	@GetMapping("/testResult/{courseId}")
 	public List<TestResult> getTestByCourseId(@PathVariable(value = "courseId") Long courseId) {
 		return this.testResultService.getTestByCourseId(courseId);
 	}

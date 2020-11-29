@@ -32,28 +32,28 @@ public class CourseController {
 		return this.courseService.getAllCourses();
 	}
 	
-	@GetMapping("/courses/{id}")
+	@GetMapping("courses/{id}")
 	public ResponseEntity<Course> getCourseById(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
 		return this.courseService.getCourseById(courseId);
 	}
 	
-	@GetMapping("/course/{category}")
+	@GetMapping("course/{category}")
 	public List<Course> getCourseByCategory(@PathVariable(value = "category") Long courseCategory) {
 		return this.courseService.getCourseByCategory(courseCategory);
 	}
 	
-	@PostMapping("courses")
+	@PostMapping("admin/courses")
 	public Course createCourse(@RequestBody Course course) throws ResourceNotFoundException{
 		return this.courseService.createCourse(course);
 	}
 	
-	@PutMapping("course/{id}")
+	@PutMapping("admin/course/{id}")
 	public ResponseEntity<Course> updateCourse(@PathVariable(value = "id") Long courseId,
 			@Valid @RequestBody Course courseDetails) throws ResourceNotFoundException {
 		return this.courseService.updateCourse(courseId, courseDetails);
 	}
 	
-	@DeleteMapping("course/{id}")
+	@DeleteMapping("admin/course/{id}")
 	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long courseId) throws ResourceNotFoundException {
 		return this.courseService.deleteCourse(courseId);
 	}

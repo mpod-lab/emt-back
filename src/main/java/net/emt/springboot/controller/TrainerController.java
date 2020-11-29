@@ -18,19 +18,18 @@ import net.emt.springboot.services.TrainerService;
 
 
 @RestController
-@RequestMapping("/api/trainers")
+@RequestMapping("/api")
 public class TrainerController {
 
 	@Autowired
 	private TrainerService trainerService;
 	
-	@GetMapping("/")
+	@GetMapping("/trainers/")
 	public List<Trainer> getAllCategories() {
 		return this.trainerService.getAllTrainers();
 	}
 	
-    @PostAuthorize("hasRole('ADMIN')")
-	@PostMapping("/")
+	@PostMapping("/admin/trainers/")
 	public Trainer createTrainer(@RequestBody Trainer trainer) {
 		return this.trainerService.saveTrainer(trainer);
 	}

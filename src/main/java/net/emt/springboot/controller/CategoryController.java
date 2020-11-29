@@ -23,37 +23,37 @@ import net.emt.springboot.model.Category;
 import net.emt.springboot.services.CategoryService;
 
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api")
 public class CategoryController {
 
 	@Autowired
 	private CategoryService categoryService;
 	
-	@GetMapping("/")
+	@GetMapping("/category/")
 	public List<Category> getAllCategories() {
 		return this.categoryService.getAllCategories();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/category/{id}")
 	public ResponseEntity<Category> getCategoryById(@PathVariable(value = "id") Long categoryId) throws ResourceNotFoundException {
 		return this.categoryService.getCategoryById(categoryId);
 	}
 	
 	
-	@PostMapping("/")
+	@PostMapping("/admin/category/")
 	public Category createCategory(@RequestBody Category category) {
 		return this.categoryService.saveCategory(category);
 	}
 	
    
-	@PutMapping("/{id}")
+	@PutMapping("/admin/category/{id}")
 	public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
 			@Valid @RequestBody Category categoryDetails) throws ResourceNotFoundException {
 		return this.categoryService.updateCategory(categoryId, categoryDetails);
 	}
 	
     
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/admin/category/{id}")
 	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long categoryId) throws ResourceNotFoundException {
 		return this.categoryService.deleteCourse(categoryId);
 	}

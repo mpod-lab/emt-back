@@ -22,34 +22,34 @@ import net.emt.springboot.model.Company;
 import net.emt.springboot.services.CompanyService;
 
 @RestController
-@RequestMapping("/api/companies")
+@RequestMapping("/api")
 public class CompanyController {
 
 	@Autowired
 	CompanyService companyService;
 	
-	@GetMapping("/")
+	@GetMapping("/companies/")
 	public List<Company> getAllCompanies() {
 		return this.companyService.getAllCompanies();
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/companies/{id}")
 	public ResponseEntity<Company> getCompanyById(@PathVariable(value = "id") Long companyId) throws ResourceNotFoundException {
 		return this.companyService.getCompanyById(companyId);
 	}
 	
-	@PostMapping("/")
+	@PostMapping("/admin/companies/")
 	public Company createCompany(@RequestBody Company company) {
 		return this.companyService.saveCompany(company);
 	}
 	
-	@PutMapping("/{id}")
+	@PutMapping("/admin/companies/{id}")
 	public ResponseEntity<Company> updateCompany(@PathVariable(value = "id") Long companyId,
 			@Valid @RequestBody Company companyDetails) throws ResourceNotFoundException {
 		return this.companyService.updateCompany(companyId, companyDetails);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/admin/companies/{id}")
 	public Map<String, Boolean> deleteCompany(@PathVariable(value = "id") Long companyId) throws ResourceNotFoundException {
 		return companyService.deleteCompany(companyId);
 	}
