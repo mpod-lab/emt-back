@@ -48,11 +48,7 @@ public class UserResourse {
 	
 	@Autowired UserService userService;
 	
-//  public ResponseEntity<User> login(@RequestBody User userData){
-//		return this.userService.login(userData);
-//  }
-//	
-//	
+	
 	@PostMapping("/login")
 	public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequestBody loginRequest) {
 

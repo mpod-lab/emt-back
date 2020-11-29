@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,20 +39,20 @@ public class CategoryController {
 		return this.categoryService.getCategoryById(categoryId);
 	}
 	
-    @PostAuthorize("hasRole('ADMIN')")
+	
 	@PostMapping("/")
 	public Category createCategory(@RequestBody Category category) {
 		return this.categoryService.saveCategory(category);
 	}
 	
-    @PostAuthorize("hasRole('ADMIN')")
+   
 	@PutMapping("/{id}")
 	public ResponseEntity<Category> updateCategory(@PathVariable(value = "id") Long categoryId,
 			@Valid @RequestBody Category categoryDetails) throws ResourceNotFoundException {
 		return this.categoryService.updateCategory(categoryId, categoryDetails);
 	}
 	
-    @PostAuthorize("hasRole('ADMIN')")
+    
 	@DeleteMapping("/{id}")
 	public Map<String, Boolean> deleteCourse(@PathVariable(value = "id") Long categoryId) throws ResourceNotFoundException {
 		return this.categoryService.deleteCourse(categoryId);
