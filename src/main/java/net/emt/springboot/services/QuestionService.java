@@ -1,5 +1,6 @@
 package net.emt.springboot.services;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,14 @@ public class QuestionService {
 	
 	public List<Question> getAllQuestions() {
 		return this.questionRepository.findAll();
+	}
+	
+	public List<Question> getAllQuestionForCourse(Long courseId) {
+		List<Question> allQuestions = new ArrayList<>();
+		this.questionRepository.findByCourseId(courseId)
+		.forEach(allQuestions::add);
+				
+		return allQuestions;
 	}
 	
 	public ResponseEntity<Question> getQuestionById(Long questionId) throws ResourceNotFoundException {

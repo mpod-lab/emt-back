@@ -33,6 +33,11 @@ public class QuestionController {
 		return this.questionService.getAllQuestions();
 	}
 	
+	@GetMapping("/questions/forCourse/{id}")
+	public List<Question> getAllQuestionForCourse(@PathVariable(value="id") Long courseId) throws ResourceNotFoundException {
+		return this.questionService.getAllQuestionForCourse(courseId);
+	}
+	
 	@GetMapping("/questions/{id}")
 	public ResponseEntity<Question> getQuestionById(@PathVariable(value = "id") Long questionId) throws ResourceNotFoundException {
 			return this.questionService.getQuestionById(questionId);
