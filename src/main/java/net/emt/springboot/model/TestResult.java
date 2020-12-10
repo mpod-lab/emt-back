@@ -45,10 +45,12 @@ public class TestResult {
 	@JoinColumn(name="student")
 	private Student student;
 	
-	@Column(name="course_date")
-	private Date courseDate;
-
+	@Column(name="course_startdate")
+	private Date courseStartDate;
 	
+	@Column(name="course_enddate")
+	private Date courseEndDate;
+
 	@Column(name="result")
 	private Float result;
 
@@ -58,12 +60,13 @@ public class TestResult {
 	}
 
 
-	public TestResult(Long score, Long allQuestions, Student student, Date courseDate, float result) {
+	public TestResult(Long score, Long allQuestions, Student student, Date courseStartDate, Date courseEndDate, float result) {
 		super();
 		this.score = score;
 		this.allQuestions = allQuestions;
 		this.student = student;
-		this.courseDate = courseDate;
+		this.courseStartDate = courseStartDate;
+		this.courseEndDate = courseEndDate;
 		this.result = result;
 	}
 
@@ -145,13 +148,23 @@ public class TestResult {
 	}
 
 
-	public Date getCourseDate() {
-		return courseDate;
+	public Date getCourseStartDate() {
+		return courseStartDate;
 	}
 
 
-	public void setCourseDate(Date courseDate) {
-		this.courseDate = courseDate;
+	public void setCourseDate(Date courseStartDate) {
+		this.courseStartDate = courseStartDate;
+	}
+	
+	
+	public Date getCourseEndDate() {
+		return courseEndDate;
+	}
+
+
+	public void setCourseEndDate(Date courseEndDate) {
+		this.courseEndDate = courseEndDate;
 	}
 
 
