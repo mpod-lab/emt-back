@@ -54,13 +54,18 @@ public class TestResult {
 	@Column(name="result")
 	private Float result;
 
+	@Column(name="type")
+	private Integer type;
+	
+	@Column(name="gain")
+	private Float gain;
 	
 	public TestResult() {
 		super();
 	}
 
 
-	public TestResult(Long score, Long allQuestions, Student student, Date courseStartDate, Date courseEndDate, float result) {
+	public TestResult(Long score, Long allQuestions, Student student, Date courseStartDate, Date courseEndDate, float result, int type, float gain) {
 		super();
 		this.score = score;
 		this.allQuestions = allQuestions;
@@ -68,6 +73,8 @@ public class TestResult {
 		this.courseStartDate = courseStartDate;
 		this.courseEndDate = courseEndDate;
 		this.result = result;
+		this.type = type;
+		this.gain = gain;
 	}
 
 
@@ -175,6 +182,26 @@ public class TestResult {
 
 	public void setResult(float result) {
 		this.result = result;
+	}
+
+
+	public Integer getType() {
+		return type;
+	}
+
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
+
+
+	public Float getGain() {
+		return gain;
+	}
+
+
+	public void setGain(Float gain) {
+		this.gain = gain;
 	}	
 	
 	

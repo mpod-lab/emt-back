@@ -25,7 +25,7 @@ public class Student {
 	@Column(name="studentSurname")
 	private String surname;
 	
-	@ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+	@ManyToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name="company")
 	private Company company;
 
